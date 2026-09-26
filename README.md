@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FitLog
 
-## Getting Started
+A dark, no-nonsense workout library built with Next.js. Browse twelve lifts, open any of them for sets, reps and step-by-step instructions, then build a plan for today and keep a list of lifts to try later.
 
-First, run the development server:
+**Live site:** https://fitlog-tarek.vercel.app
+**Repository:** https://github.com/TarekAhmed353/PH-Sixth-Assignment
+
+## Features
+
+- Workout library with 12 lifts from the FitLog API, shown as cards with muscle group tags, equipment, duration, calories and rating
+- A details page for every workout, with a specs panel and numbered instructions
+- Today's plan with a cap of five lifts. The Add button locks once the plan is full
+- A Save for later list, kept separate from today's plan
+- Live stats on the My Plan page that add up exercises, minutes and calories as the plan changes
+- Sort the plan by duration, calories or rating
+- Mark lifts as done or remove them, with a toast for every action
+- Plan and saved lists are stored in localStorage, so they survive a page reload
+- Navbar badges showing how many lifts are in the plan and the saved list
+- A loading spinner while workouts are fetched, a custom 404 page, and a layout that works on phone, tablet and desktop
+- If the API is down or rate limited, the app falls back to a local copy of the workout data
+
+## Tech stack
+
+- Next.js 16 (App Router) with React and TypeScript
+- Tailwind CSS 4 and daisyUI 5
+- react-hot-toast for notifications
+- lucide-react for icons
+- next/font with Oswald and Inter
+- Deployed on Vercel
+
+## Pages
+
+| Route | What it shows |
+| --- | --- |
+| `/` | Hero and the workout library |
+| `/workout/[id]` | Details for one workout |
+| `/my-plan` | Today's plan and saved lifts |
+| Any other URL | Custom 404 page |
+
+## Running it locally
 
 ```bash
+git clone https://github.com/TarekAhmed353/PH-Sixth-Assignment.git
+cd PH-Sixth-Assignment
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/
+├── app/
+│   ├── page.tsx            Home page
+│   ├── my-plan/page.tsx    My Plan page
+│   ├── workout/[id]/       Workout details page
+│   ├── not-found.tsx       404 page
+│   └── layout.tsx          Navbar, footer and shared state
+├── components/             Navbar, Hero, cards, loader and page views
+├── context/PlanContext.tsx Plan and saved lists, stored in localStorage
+└── lib/                    API helpers, types and fallback data
+```
