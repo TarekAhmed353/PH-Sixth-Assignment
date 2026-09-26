@@ -5,23 +5,17 @@ import type { Workout } from "@/lib/types";
 
 interface PlanItemCardProps {
   workout: Workout;
-  isDone?: boolean;
   onMarkDone?: () => void;
   onRemove: () => void;
 }
 
 export default function PlanItemCard({
   workout,
-  isDone = false,
   onMarkDone,
   onRemove,
 }: PlanItemCardProps) {
   return (
-    <div
-      className={`flex flex-col gap-4 rounded-2xl border border-base-300 bg-base-200 p-4 sm:flex-row sm:items-center ${
-        isDone ? "opacity-60" : ""
-      }`}
-    >
+    <div className="flex flex-col gap-4 rounded-2xl border border-base-300 bg-base-200 p-4 sm:flex-row sm:items-center">
       <div className="flex flex-1 items-center gap-4">
         <div className="relative h-16 w-24 shrink-0 overflow-hidden rounded-lg">
           <Image
@@ -64,11 +58,10 @@ export default function PlanItemCard({
         {onMarkDone && (
           <button
             onClick={onMarkDone}
-            disabled={isDone}
             className="btn btn-sm btn-primary gap-1 rounded-full"
           >
             <Check size={14} />
-            {isDone ? "Done" : "Mark as Done"}
+            Mark as Done
           </button>
         )}
         <button

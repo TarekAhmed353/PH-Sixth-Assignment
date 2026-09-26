@@ -12,7 +12,6 @@ export type AddResult = "added" | "exists" | "full";
 interface PlanContextValue {
   plan: Workout[];
   saved: Workout[];
-  completedIds: number[];
   isLoaded: boolean;
   addToPlan: (workout: Workout) => AddResult;
   saveForLater: (workout: Workout) => AddResult;
@@ -26,10 +25,9 @@ const PlanContext = createContext<PlanContextValue | null>(null);
 export function PlanProvider({ children }: { children: React.ReactNode }) {
   const [plan, setPlan] = useState<Workout[]>([]);
   const [saved, setSaved] = useState<Workout[]>([]);
-  const [completedIds, setCompletedIds] = useState<number[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  /* eslint-disable react-hooks/set-state-in-effect */
+  
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -37,22 +35,18 @@ export function PlanProvider({ children }: { children: React.ReactNode }) {
         const data = JSON.parse(raw);
         setPlan(data.plan ?? []);
         setSaved(data.saved ?? []);
-        setCompletedIds(data.completedIds ?? []);
       }
     } catch {}
     setIsLoaded(true);
   }, []);
-  /* eslint-enable react-hooks/set-state-in-effect */
+ 
 
   useEffect(() => {
     if (!isLoaded) return;
     try {
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify({ plan, saved, completedIds })
-      );
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ plan, saved }));
     } catch {}
-  }, [plan, saved, completedIds, isLoaded]);
+  }, [plan, saved, isLoaded]);
 
   const addToPlan = (workout: Workout): AddResult => {
     if (plan.some((w) => w.id === workout.id)) return "exists";
@@ -69,7 +63,6 @@ export function PlanProvider({ children }: { children: React.ReactNode }) {
 
   const removeFromPlan = (id: number) => {
     setPlan(plan.filter((w) => w.id !== id));
-    setCompletedIds(completedIds.filter((doneId) => doneId !== id));
   };
 
   const removeFromSaved = (id: number) => {
@@ -77,9 +70,7 @@ export function PlanProvider({ children }: { children: React.ReactNode }) {
   };
 
   const markAsDone = (id: number) => {
-    if (!completedIds.includes(id)) {
-      setCompletedIds([...completedIds, id]);
-    }
+    setPlan(plan.filter((w) => w.id !== id));
   };
 
   return (
@@ -87,7 +78,6 @@ export function PlanProvider({ children }: { children: React.ReactNode }) {
       value={{
         plan,
         saved,
-        completedIds,
         isLoaded,
         addToPlan,
         saveForLater,

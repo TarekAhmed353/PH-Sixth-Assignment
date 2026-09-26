@@ -26,15 +26,8 @@ function sortWorkouts(list: Workout[], key: SortKey) {
 }
 
 export default function MyPlanView() {
-  const {
-    plan,
-    saved,
-    completedIds,
-    isLoaded,
-    removeFromPlan,
-    removeFromSaved,
-    markAsDone,
-  } = usePlan();
+  const { plan, saved, isLoaded, removeFromPlan, removeFromSaved, markAsDone } =
+    usePlan();
 
   const [activeTab, setActiveTab] = useState<Tab>("plan");
   const [sortBy, setSortBy] = useState<SortKey>("duration");
@@ -55,7 +48,7 @@ export default function MyPlanView() {
 
   const handleMarkDone = (workout: Workout) => {
     markAsDone(workout.id);
-    toast.success(`${workout.name} marked as done`);
+    toast.success(`${workout.name} done. Nice work!`);
   };
 
   const handleRemove = (workout: Workout) => {
@@ -157,9 +150,6 @@ export default function MyPlanView() {
               <PlanItemCard
                 key={workout.id}
                 workout={workout}
-                isDone={
-                  activeTab === "plan" && completedIds.includes(workout.id)
-                }
                 onMarkDone={
                   activeTab === "plan"
                     ? () => handleMarkDone(workout)
