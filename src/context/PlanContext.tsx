@@ -29,8 +29,6 @@ export function PlanProvider({ children }: { children: React.ReactNode }) {
   const [completedIds, setCompletedIds] = useState<number[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Load saved data from the browser once, after the page has loaded.
-  // localStorage only exists in the browser, so this has to run in an effect.
   /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     try {
@@ -41,14 +39,11 @@ export function PlanProvider({ children }: { children: React.ReactNode }) {
         setSaved(data.saved ?? []);
         setCompletedIds(data.completedIds ?? []);
       }
-    } catch {
-      // If storage is empty or broken, start fresh
-    }
+    } catch {}
     setIsLoaded(true);
   }, []);
   /* eslint-enable react-hooks/set-state-in-effect */
 
-  // Save to the browser every time something changes
   useEffect(() => {
     if (!isLoaded) return;
     try {
@@ -56,9 +51,7 @@ export function PlanProvider({ children }: { children: React.ReactNode }) {
         STORAGE_KEY,
         JSON.stringify({ plan, saved, completedIds })
       );
-    } catch {
-      // Ignore storage errors
-    }
+    } catch {}
   }, [plan, saved, completedIds, isLoaded]);
 
   const addToPlan = (workout: Workout): AddResult => {

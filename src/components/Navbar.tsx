@@ -32,7 +32,7 @@ export default function Navbar() {
         </Link>
 
         {/* Page links: middle on desktop, own row on mobile */}
-        <ul className="order-3 flex w-full justify-center gap-2 md:order-none md:w-auto">
+        <ul className="order-3 flex w-full justify-center gap-2 md:order-0 md:w-auto">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
