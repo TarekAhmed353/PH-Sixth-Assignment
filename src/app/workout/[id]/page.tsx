@@ -28,14 +28,16 @@ export default async function WorkoutPage({ params }: WorkoutPageProps) {
   return (
     <main className="flex-1">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 md:grid-cols-2 md:gap-12 md:px-6 md:py-14">
-        <div className="relative aspect-4/5 overflow-hidden rounded-2xl border border-base-300 md:sticky md:top-24 md:self-start">
-          <Image
-            src={workout.image}
-            alt={workout.name}
-            fill
-            sizes="(min-width: 768px) 50vw, 100vw"
-            className="object-cover"
-          />
+        <div className="md:sticky md:top-24 md:self-start">
+          <div className="relative aspect-4/5 overflow-hidden rounded-2xl border border-base-300">
+            <Image
+              src={workout.image}
+              alt={workout.name}
+              fill
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className="object-cover"
+            />
+          </div>
         </div>
 
         <div className="space-y-6">

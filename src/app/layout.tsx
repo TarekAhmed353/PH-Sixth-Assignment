@@ -30,6 +30,7 @@ export default function RootLayout({
     <html
       lang="en"
       data-theme="fitlog"
+      data-scroll-behavior="smooth"
       className={`${inter.variable} ${oswald.variable}`}
     >
       <body className="min-h-screen flex flex-col bg-base-100 text-base-content font-sans antialiased">
