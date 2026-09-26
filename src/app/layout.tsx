@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Oswald } from "next/font/google";
 import { PlanProvider } from "@/context/PlanContext";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import "./globals.css";
 
 const inter = Inter({
@@ -35,6 +36,7 @@ export default function RootLayout({
         <PlanProvider>
           <Navbar />
           {children}
+          <Footer />
         </PlanProvider>
       </body>
     </html>
